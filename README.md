@@ -10,7 +10,7 @@ Manage your shader, compositor, and geometry node groups like a pro with full ve
 
 ## 📥 Installation
 
-1. Download `node_library_manager.py`
+1. Download `node_library_manager`
 2. Open Blender → **Edit** → **Preferences** → **Add-ons**
 3. Click **Install** and select the file
 4. Enable **Node Group Library Manager**
