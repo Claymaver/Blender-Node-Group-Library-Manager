@@ -1,0 +1,88 @@
+name: Release Addon
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.1.0
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create addon directory
+        run: |
+          mkdir -p node_library_manager
+          cp node_library_manager.py node_library_manager/
+          cp README.md node_library_manager/
+          cp LICENSE node_library_manager/ 2>/dev/null || echo "No LICENSE file found"
+
+      - name: Create ZIP archive
+        run: |
+          zip -r node_library_manager-v${{ steps.version.outputs.VERSION }}.zip node_library_manager/
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          cat << 'EOF' > release_notes.md
+          ## Node Group Library Manager v${{ steps.version.outputs.VERSION }}
+          
+          ### Installation
+          
+          1. Download `node_library_manager-v${{ steps.version.outputs.VERSION }}.zip`
+          2. In Blender: `Edit` → `Preferences` → `Add-ons` → `Install...`
+          3. Select the downloaded ZIP file
+          4. Enable "Node Group Library Manager"
+          5. Find it in the N-panel of Shader Editor, Compositor, or Geometry Nodes
+          
+          ### What's Included
+          
+          - ✅ Full version control for node groups
+          - ✅ Tags and search functionality
+          - ✅ Export/Import libraries
+          - ✅ Custom storage paths
+          - ✅ Clean, modern UI
+          
+          ### Requirements
+          
+          - Blender 3.0 or newer
+          - Works on Windows, macOS, and Linux
+          
+          ### Support
+          
+          - 📖 [Documentation](../../wiki)
+          - 🐛 [Report Issues](../../issues)
+          - 💬 [Discussions](../../discussions)
+          
+          ---
+          
+          **Full Changelog**: View all changes in [CHANGELOG.md](../../blob/main/CHANGELOG.md)
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: node_library_manager-v${{ steps.version.outputs.VERSION }}.zip
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_library_manager-v${{ steps.version.outputs.VERSION }}
+          path: node_library_manager-v${{ steps.version.outputs.VERSION }}.zip
+          retention-days: 90
