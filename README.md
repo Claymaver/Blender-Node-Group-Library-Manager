@@ -64,16 +64,12 @@ Manage your shader, compositor, and geometry node groups like a pro with full ve
 4. **Add version notes and tags** (optional)
 5. Done! Your node group is now in the library
 
-![Save Screenshot - Placeholder]
-
 ### Using a Saved Node Group
 
 1. **Open** Shader Editor or Compositor
 2. **Find your node group** in the library panel
 3. **Click the node group name** to add it to your editor
 4. The node appears at your cursor location
-
-![Add Screenshot - Placeholder]
 
 ### Version History
 
@@ -82,15 +78,11 @@ Click the **arrow** next to any node group to see all versions:
 - Import specific versions
 - Delete old versions
 
-![Version History Screenshot - Placeholder]
-
 ---
 
 ## 📖 Usage Guide
 
 ### The Panel
-
-![Main Panel Screenshot - Placeholder]
 
 **Top Section:**
 - Shows currently selected node group
@@ -115,13 +107,9 @@ metal, procedural, PBR
 
 Tags appear with # symbols and are searchable.
 
-![Tags Screenshot - Placeholder]
-
 ### Preferences
 
 Access in **Edit** → **Preferences** → **Add-ons** → **Node Group Library Manager**
-
-![Preferences Screenshot - Placeholder]
 
 **Options:**
 - **Library Path:** Set custom storage location
